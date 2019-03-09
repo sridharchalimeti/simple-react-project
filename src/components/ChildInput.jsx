@@ -24,7 +24,7 @@ export class ChildInput extends React.Component {
 
         return (
             <div>
-                Hide: <input {...inputProps}></input>
+                Hide Text: <input {...inputProps}></input>
             </div>
         );
     }

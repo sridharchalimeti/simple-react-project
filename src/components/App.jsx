@@ -1,24 +1,32 @@
 import React from "react";
-import {Tooltip} from "./Tooltip.jsx"
+import { Tooltip } from "./Tooltip";
+import { ChildInput } from "./ChildInput";
 
-export class App extends React.Component{
-  constructor(props){
+export class App extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
-      disable: false
+      disable: false,
+      hide: false
     };
-    this.handleCheck = (event) =>{
+    this.handleCheck = (event) => {
       event.persist();
       this.setState(() => ({
         disable: event.target.checked
       }));
     }
+
+    this.handleChildReaction = (checked) => {
+      this.setState(() => ({
+        hide: checked
+      }))
+    }
   }
 
-  render(){
-    const{disable} = this.state;
+  render() {
+    const { disable, hide } = this.state;
     console.log('disable', disable);
-    const{handleCheck} = this;
+    const { handleCheck, handleChildReaction } = this;
     const checkboxProps = {
       type: 'checkbox',
       defaultChecked: disable,
@@ -26,13 +34,17 @@ export class App extends React.Component{
     };
 
     const toolTipProps = {
-      hide: disable
+      disable, hide
     }
+
+    const childInputProps = {};
+    childInputProps.handleChildReaction = handleChildReaction.bind(this);
 
     return (<div>
       <div><h1>Home Component</h1></div>
-      <Tooltip {...toolTipProps}/>
-      <div><input {...checkboxProps}></input></div>
-      </div>);
+      <Tooltip {...toolTipProps} />
+      <div>Disable Background: <input {...checkboxProps}></input></div>
+      <ChildInput {...childInputProps} />
+    </div>);
   }
 }
